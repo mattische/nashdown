@@ -273,6 +273,7 @@
 /* Accidentals ♭ ♯ */
 .nd-acc {
   font-size: 0.72em;
+  font-weight: 700;
   align-self: flex-start;
   line-height: 1;
   padding-bottom: 0.22em;
@@ -325,8 +326,8 @@
 
 /* Slash separator */
 .nd-slash {
-  font-size: 1.1em;
-  font-weight: 700;
+  font-size: 1.7em;
+  font-weight: 400;
   align-self: flex-end;
   line-height: 1;
   opacity: 0.6;
@@ -342,18 +343,14 @@
 }
 
 .nd-b-root {
-  font-size: 1.35em;
+  font-size: 1.7em;
   font-weight: 700;
   line-height: 1;
 }
 
-/* Slash chord: scale down main root to match bass root */
-.nd-has-bass .nd-root {
-  font-size: 1.35em;
-}
-
 .nd-b-acc {
   font-size: 0.72em;
+  font-weight: 700;
   align-self: flex-start;
   padding-bottom: 0.22em;
 }
@@ -415,7 +412,6 @@
 /* ── Repeat previous measure ── */
 .nd-chord-repeat .nd-root {
   font-size: 1.4em;
-  opacity: 0.4;
 }
 
 /* ── Error ── */
