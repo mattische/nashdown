@@ -117,3 +117,31 @@ Copy `main.js`, `styles.css`, and `manifest.json` into:
 <vault>/.obsidian/plugins/nashdown/
 ```
 Then enable the plugin in Obsidian settings.
+
+
+---
+
+## New release
+
+Add a new release tag:
+```bash
+gh release create 1.0.0 main.js styles.css
+  manifest.json --title "1.0.0" --notes "Initial
+  release"
+```
+
+  - 1.0.0 — version tag (anything i.e,
+  1.0.1, 2.0.0)
+  - main.js styles.css manifest.json — files added to release (BRAT fetches these)
+  - --title — title of release
+  - --notes — release notes
+
+#### future updates pipeline:
+```bash
+  npm run build
+  git add main.js styles.css manifest.json
+  git commit -m "what have been done"
+  git push
+  gh release create 1.0.1 main.js styles.css
+  manifest.json --title "1.0.1" --notes "notes about update"
+```
