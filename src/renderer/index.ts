@@ -111,6 +111,7 @@ function renderChord(token: ChordToken): string {
   const classes = ['nd-chord'];
   if (token.diamond) classes.push('nd-diamond');
   if (token.root === 'X') classes.push('nd-rest');
+  if (token.bass) classes.push('nd-has-bass');
 
   const fermataHtml = token.fermata
     ? '<div class="nd-fermata">&#x1D110;</div>'
