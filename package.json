@@ -1,6 +1,6 @@
 {
   "name": "nashdown",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Obsidian plugin for Nashdown — Markdown-based music chord charts",
   "main": "main.js",
   "scripts": {
