@@ -1,0 +1,406 @@
+/* ── Nashdown Chart Styles ── */
+
+.nd-chart {
+  font-family: var(--font-text, Georgia, serif);
+  padding: 1.2em 1.5em;
+  max-width: 960px;
+}
+
+/* ── Header ── */
+.nd-header {
+  text-align: center;
+  margin-bottom: 1.5em;
+  border-bottom: 1px solid var(--color-base-40, #555);
+  padding-bottom: 0.6em;
+}
+
+.nd-title {
+  font-size: 1.6em;
+  font-weight: bold;
+  margin: 0 0 0.4em;
+  border: none;
+}
+
+.nd-meta {
+  display: flex;
+  gap: 2.5em;
+  font-size: 0.85em;
+  color: var(--color-base-60, #888);
+}
+
+/* ── Section ── */
+.nd-section {
+  display: grid;
+  grid-template-columns: 5em 1fr;
+  gap: 0.3em 0;
+  margin-bottom: 1.8em;
+  align-items: start;
+}
+
+.nd-section-label {
+  font-size: 0.82em;
+  font-weight: 600;
+  color: var(--color-base-60, #888);
+  text-align: right;
+  padding-right: 1em;
+  padding-top: 0.5em;
+  white-space: nowrap;
+}
+
+/* Thin vertical line between label and content — always visible */
+.nd-section-content {
+  border-left: 1.5px solid var(--color-base-40, #666);
+  padding-left: 1em;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Row — default: no bar lines, just space between measures ── */
+.nd-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1.8em;
+  padding: 0.3em 0;
+  margin-bottom: 0.5em;
+}
+
+/* ── Measure ── */
+.nd-measure {
+  position: relative;   /* anchor for absolutely-positioned comment */
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 0;
+  padding: 0;
+}
+
+/* Comment floats above — absolutely positioned so it doesn't affect row height */
+.nd-measure-comment {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  margin-bottom: 3px;
+  font-size: 0.72em;
+  font-style: italic;
+  color: var(--color-base-50, #888);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* Inner chord group */
+.nd-measure-inner {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 0.9em;
+}
+
+/* Multiple chords in one measure → underlined as a group via ::after so chords stay at baseline */
+.nd-measure-inner.nd-multi {
+  position: relative;
+}
+
+.nd-measure-inner.nd-multi::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 1px;
+  background: currentColor;
+}
+
+.nd-annotation {
+  font-size: 0.65em;
+  font-style: italic;
+  color: var(--color-base-50, #888);
+  align-self: flex-end;
+  padding-bottom: 0.1em;
+  margin-left: 0.4em;
+  white-space: nowrap;
+}
+
+/* ── Separator between measures (barlines/bardots) — no gap needed ── */
+.nd-barlines .nd-row,
+.nd-bardots .nd-row {
+  gap: 0;
+}
+
+/* Thin vertical line separator */
+.nd-sep-line {
+  display: inline-flex;
+  align-self: center;
+  width: 1px;
+  height: 1.4em;
+  background: currentColor;
+  opacity: 0.2;
+  margin: 0 0.9em;
+  flex-shrink: 0;
+}
+
+/* Filled circle separator */
+.nd-sep-dot {
+  display: inline-flex;
+  align-self: center;
+  align-items: center;
+  font-size: 0.9em;
+  font-weight: 900;
+  opacity: 0.6;
+  margin: 0 0.7em;
+  flex-shrink: 0;
+}
+
+/* ── Repeat signs — proper music notation ── */
+.nd-repeat-marker {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-self: center;
+  padding: 0 4px;
+}
+
+.nd-barlines .nd-repeat-marker {
+  align-self: stretch;
+}
+
+.nd-rep-thin {
+  width: 1px;
+  height: 2em;
+  background: currentColor;
+  opacity: 0.75;
+  flex-shrink: 0;
+}
+
+.nd-rep-thick {
+  width: 3px;
+  height: 2em;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+.nd-rep-dots {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  padding: 0 5px;
+  height: 2em;
+}
+
+.nd-rep-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+.nd-repeat-start { padding-right: 6px; }
+.nd-repeat-end   { padding-left: 6px; }
+
+.nd-repeat-count {
+  font-size: 0.9em;
+  font-weight: 500;
+  font-style: italic;
+  margin-left: 6px;
+  align-self: flex-end;
+  padding-bottom: 2px;
+  white-space: nowrap;
+}
+
+/* ── Chord cell ── */
+.nd-chord {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+/* Above-chord items (push, fermata, hits, beats) — float above without affecting row height */
+.nd-chord-above {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2px;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* Tick marks — used for both hits (') and beats (.) */
+.nd-ticks {
+  display: flex;
+  flex-direction: row;
+  gap: 1px;
+  justify-content: center;
+  line-height: 1;
+}
+
+.nd-tick {
+  font-size: 0.85em;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* Chord body: all inline */
+.nd-chord-body {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  line-height: 1;
+}
+
+.nd-root {
+  font-size: 1.7em;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* Accidentals ♭ ♯ */
+.nd-acc {
+  font-size: 0.72em;
+  align-self: flex-start;
+  line-height: 1;
+  padding-bottom: 0.22em;
+}
+
+/* Push: > or < shown above the chord */
+.nd-push-above {
+  font-size: 0.95em;
+  font-weight: 900;
+  font-style: italic;
+  line-height: 1;
+  opacity: 0.7;
+}
+
+/* Nashville quality symbols */
+.nd-qual {
+  font-size: 0.68em;
+  align-self: flex-start;
+  line-height: 1;
+  padding-bottom: 0.18em;
+  font-weight: 700;
+}
+
+/* Letter-chord minor 'm' */
+.nd-qual-m {
+  font-size: 0.88em;
+  align-self: flex-end;
+  line-height: 1;
+  padding-bottom: 0.04em;
+  font-weight: 600;
+}
+
+/* Extensions: 7 9 maj7 */
+.nd-ext {
+  font-size: 0.68em;
+  align-self: flex-start;
+  line-height: 1;
+  padding-bottom: 0.15em;
+  font-weight: 600;
+}
+
+/* Stab: ! inline */
+.nd-stab-mark {
+  font-size: 1.1em;
+  font-weight: 700;
+  align-self: flex-end;
+  line-height: 1;
+  padding-bottom: 0.02em;
+}
+
+/* Slash separator */
+.nd-slash {
+  font-size: 1.4em;
+  font-weight: 700;
+  align-self: flex-end;
+  line-height: 1;
+  opacity: 0.6;
+  margin: 0 1px 0 2px;
+}
+
+/* Bass note */
+.nd-bass {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: flex-end;
+  line-height: 1;
+}
+
+.nd-b-root {
+  font-size: 1.4em;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.nd-b-acc {
+  font-size: 0.72em;
+  align-self: flex-start;
+  padding-bottom: 0.22em;
+}
+
+.nd-b-qual {
+  font-size: 0.88em;
+  align-self: flex-end;
+  padding-bottom: 0.04em;
+}
+
+/* ── Diamond ── */
+.nd-diamond-box {
+  position: relative;
+  width: 1.9em;
+  height: 1.85em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nd-diamond-box::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  width: 1.2em;
+  height: 1.2em;
+  border: 1px solid currentColor;
+}
+
+.nd-diamond-box .nd-acc {
+  font-size: 1.0em;
+}
+
+.nd-diamond-box .nd-chord-body {
+  font-size: 0.68em;
+}
+
+/* ── Rest X ── */
+.nd-rest .nd-root {
+  opacity: 0.4;
+}
+
+/* ── Fermata ── */
+.nd-fermata {
+  font-size: 1em;
+  line-height: 1;
+  margin-bottom: 2px;
+}
+
+/* ── Repeat previous measure ── */
+.nd-chord-repeat .nd-root {
+  font-size: 1.4em;
+  opacity: 0.4;
+}
+
+/* ── Error ── */
+.nd-error {
+  color: var(--color-red, #e74c3c);
+  font-size: 0.85em;
+  padding: 0.5em;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+}
