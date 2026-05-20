@@ -116,11 +116,9 @@ function renderChord(token: ChordToken): string {
   const fermataHtml = token.fermata
     ? '<div class="nd-fermata">&#x1D110;</div>'
     : '';
-
   const hitsHtml = token.hits > 0
     ? `<div class="nd-ticks">${'<span class="nd-tick">\'</span>'.repeat(token.hits)}</div>`
     : '';
-
   const beatsHtml = token.beats && token.beats > 0
     ? `<div class="nd-ticks">${'<span class="nd-tick">\'</span>'.repeat(token.beats)}</div>`
     : '';
@@ -131,21 +129,26 @@ function renderChord(token: ChordToken): string {
   const qualHtml  = formatQuality(token.quality, isNashville);
   const extHtml   = token.extension ? `<span class="nd-ext">${esc(token.extension)}</span>` : '';
   const stabHtml  = token.stab ? '<span class="nd-stab-mark">!</span>' : '';
-  const bassHtml  = token.bass ? renderBass(token.bass) : '';
 
-  const innerBody = `<div class="nd-chord-body">${flatHtml}${sharpHtml}${rootHtml}${qualHtml}${extHtml}${stabHtml}${bassHtml}</div>`;
-  const body = token.diamond
-    ? `<div class="nd-diamond-box">${innerBody}</div>`
-    : innerBody;
+  // Chord body never contains bass — bass is a sibling in the flex-row slash layout
+  const innerBody = `<div class="nd-chord-body">${flatHtml}${sharpHtml}${rootHtml}${qualHtml}${extHtml}${stabHtml}</div>`;
+  const body = token.diamond ? `<div class="nd-diamond-box">${innerBody}</div>` : innerBody;
 
-  // Above-chord items grouped in an absolutely-positioned container so they don't affect row height
   const aboveItems = [
-    token.push    ? `<div class="nd-push-above">${esc(token.push)}</div>` : '',
+    token.push ? `<div class="nd-push-above">${esc(token.push)}</div>` : '',
     fermataHtml,
     hitsHtml,
     beatsHtml,
   ].filter(Boolean).join('');
   const aboveHtml = aboveItems ? `<div class="nd-chord-above">${aboveItems}</div>` : '';
+
+  if (token.bass) {
+    // Slash chord: nd-chord is a flex row (nd-has-bass).
+    // Main part is a flex column (nd-chord-main) so above items sit over just the main root.
+    // Bass part (slash + nd-bass or nd-bass-chord) is a sibling, aligned at the bottom.
+    const mainHtml = `<div class="nd-chord-main">${aboveHtml}${body}</div>`;
+    return `<div class="${classes.join(' ')}">${mainHtml}${renderBass(token.bass)}</div>`;
+  }
 
   return `<div class="${classes.join(' ')}">${aboveHtml}${body}</div>`;
 }
@@ -156,14 +159,14 @@ function renderBass(bass: BassNote): string {
   const root  = `<span class="nd-b-root">${esc(bass.root)}</span>`;
   const qual  = bass.quality === 'm' ? '<span class="nd-b-qual">m</span>' : '';
   const slashHtml = '<span class="nd-slash">/</span>';
-  const bassBody = `<span class="nd-bass">${flat}${root}${sharp}${qual}</span>`;
+  const bassBodyHtml = `<span class="nd-bass">${flat}${root}${sharp}${qual}</span>`;
 
   if (bass.hits && bass.hits > 0) {
     const ticks = '<span class="nd-tick">\'</span>'.repeat(bass.hits);
-    return `${slashHtml}<span class="nd-bass-chord"><div class="nd-ticks">${ticks}</div>${bassBody}</span>`;
+    return `${slashHtml}<div class="nd-bass-chord"><div class="nd-ticks">${ticks}</div>${bassBodyHtml}</div>`;
   }
 
-  return `${slashHtml}${bassBody}`;
+  return `${slashHtml}${bassBodyHtml}`;
 }
 
 function formatQuality(quality: string, isNashville: boolean): string {

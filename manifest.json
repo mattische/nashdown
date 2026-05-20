@@ -1,7 +1,7 @@
 {
   "id": "nashdown",
   "name": "Nashdown",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "minAppVersion": "1.4.0",
   "description": "Markdown-based music chord charts with Nashville Number System support",
   "author": "mattische",

@@ -216,10 +216,22 @@
 .nd-chord {
   display: inline-flex;
   flex-direction: column;
-  align-items: center;
+  /* default align-items: stretch so nd-chord-above fills chord body width for centering */
 }
 
-/* Above-chord items (push, fermata, hits, beats) — in-flow above chord body */
+/* Slash chord: lay main root and bass root side by side, bottoms aligned */
+.nd-chord.nd-has-bass {
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+/* Main chord column inside a slash chord (mirrors nd-chord for non-slash) */
+.nd-chord-main {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+/* Above-chord items: in-flow, centered within the (stretched) chord body width */
 .nd-chord-above {
   display: flex;
   flex-direction: column;
