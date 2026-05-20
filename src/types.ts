@@ -11,6 +11,7 @@ export interface Metadata {
   barlines?: boolean;  // default false — thin line between measures
   bardots?: boolean;   // default false — filled dot between measures
   zoom?: number;       // signed %, applied as font-size: (100 + zoom)% on the chart root
+  labels?: 'left' | 'top';  // section label position: left column (default) or above section
 }
 
 export interface Section {

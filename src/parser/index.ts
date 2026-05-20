@@ -34,6 +34,9 @@ export function parse(source: string): ChartDocument {
         const n = parseInt(value, 10);
         if (!isNaN(n)) metadata.zoom = n;
       }
+      else if (key === 'labels') {
+        if (value.toLowerCase() === 'top') metadata.labels = 'top';
+      }
       continue;
     }
 

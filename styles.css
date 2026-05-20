@@ -55,6 +55,23 @@
   flex-direction: column;
 }
 
+/* labels: top — section label sits above content, no side column */
+.nd-labels-top .nd-section {
+  display: block;
+}
+
+.nd-labels-top .nd-section-label {
+  text-align: left;
+  padding-right: 0;
+  padding-top: 0;
+  padding-bottom: 0.3em;
+}
+
+.nd-labels-top .nd-section-content {
+  border-left: none;
+  padding-left: 0;
+}
+
 /* ── Row — default: no bar lines, just space between measures ── */
 .nd-row {
   display: flex;
