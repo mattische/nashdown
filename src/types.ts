@@ -59,4 +59,5 @@ export interface BassNote {
   sharp: boolean;
   root: string;
   quality: string;
+  hits?: number;
 }

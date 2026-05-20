@@ -291,7 +291,17 @@ function parseBassNote(s: string): BassNote {
   let sharp = false;
   let root = '';
   let quality = '';
+  let hits: number | undefined;
   let i = 0;
+
+  // Strip trailing hits suffix (' or '')
+  if (s.endsWith("''")) {
+    hits = 2;
+    s = s.slice(0, -2);
+  } else if (s.endsWith("'")) {
+    hits = 1;
+    s = s.slice(0, -1);
+  }
 
   if (s[i] === 'b' && i + 1 < s.length && /[1-7A-G]/.test(s[i + 1])) {
     flat = true;
@@ -320,5 +330,5 @@ function parseBassNote(s: string): BassNote {
     }
   }
 
-  return { flat, sharp, root, quality };
+  return { flat, sharp, root, quality, hits };
 }

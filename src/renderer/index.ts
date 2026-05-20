@@ -96,7 +96,7 @@ function renderMeasure(measure: Measure): string {
     ? `<span class="nd-measure-comment">${esc(measure.comment)}</span>`
     : '';
   const innerClass = isMulti ? 'nd-measure-inner nd-multi' : 'nd-measure-inner';
-  return `<div class="nd-measure">${comment}<div class="${innerClass}">${chords}</div>${annotation}</div>`;
+  return `<div class="nd-measure"><div class="nd-measure-main">${comment}<div class="${innerClass}">${chords}</div></div>${annotation}</div>`;
 }
 
 function renderChordEntry(entry: ChordEntry): string {
@@ -155,7 +155,15 @@ function renderBass(bass: BassNote): string {
   const sharp = bass.sharp ? '<span class="nd-acc nd-sharp nd-b-acc">&#x266F;</span>' : '';
   const root  = `<span class="nd-b-root">${esc(bass.root)}</span>`;
   const qual  = bass.quality === 'm' ? '<span class="nd-b-qual">m</span>' : '';
-  return `<span class="nd-slash">/</span><span class="nd-bass">${flat}${root}${sharp}${qual}</span>`;
+  const slashHtml = '<span class="nd-slash">/</span>';
+  const bassBody = `<span class="nd-bass">${flat}${root}${sharp}${qual}</span>`;
+
+  if (bass.hits && bass.hits > 0) {
+    const ticks = '<span class="nd-tick">\'</span>'.repeat(bass.hits);
+    return `${slashHtml}<span class="nd-bass-chord"><div class="nd-ticks">${ticks}</div>${bassBody}</span>`;
+  }
+
+  return `${slashHtml}${bassBody}`;
 }
 
 function formatQuality(quality: string, isNashville: boolean): string {

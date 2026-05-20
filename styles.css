@@ -67,7 +67,6 @@
 
 /* ── Measure ── */
 .nd-measure {
-  position: relative;   /* anchor for absolutely-positioned comment */
   display: flex;
   flex-direction: row;
   align-items: flex-end;
@@ -75,17 +74,21 @@
   padding: 0;
 }
 
-/* Comment floats above — absolutely positioned so it doesn't affect row height */
+/* Wraps comment + chord group in a column so comment sits above chords */
+.nd-measure-main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Comment flows above the chord group */
 .nd-measure-comment {
-  position: absolute;
-  bottom: 100%;
-  left: 0;
-  margin-bottom: 3px;
   font-size: 0.72em;
   font-style: italic;
   color: var(--color-base-50, #888);
   white-space: nowrap;
   pointer-events: none;
+  margin-bottom: 2px;
 }
 
 /* Inner chord group */
@@ -214,19 +217,13 @@
   display: inline-flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
 }
 
-/* Above-chord items (push, fermata, hits, beats) — float above without affecting row height */
+/* Above-chord items (push, fermata, hits, beats) — in-flow above chord body */
 .nd-chord-above {
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 0;
   pointer-events: none;
   white-space: nowrap;
 }
@@ -352,6 +349,13 @@
   font-size: 0.88em;
   align-self: flex-end;
   padding-bottom: 0.04em;
+}
+
+/* Bass note with hit marks above — mirrors nd-chord structure */
+.nd-bass-chord {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* ── Diamond ── */
