@@ -36,7 +36,7 @@ export function parse(source: string): ChartDocument {
       }
       else if (key === 'labels') {
         const v = value.toLowerCase();
-        if (v === 'left' || v === 'top') metadata.labels = v as 'left' | 'top';
+        if (v === 'left' || v === 'top' || v === 'none') metadata.labels = v as 'left' | 'top' | 'none';
       }
       continue;
     }

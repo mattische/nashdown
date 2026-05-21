@@ -35,11 +35,17 @@
 }
 
 .nd-section-label {
-  font-size: 0.82em;
-  font-weight: 600;
-  color: var(--color-base-60, #888);
+  font-size: 0.8em;
+  font-weight: 700;
+  font-family: var(--font-monospace, monospace);
+  color: currentColor;
   white-space: nowrap;
   padding-bottom: 0.3em;
+  letter-spacing: 0.04em;
+}
+
+.nd-labels-none .nd-section-label {
+  display: none;
 }
 
 .nd-section-content {

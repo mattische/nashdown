@@ -21,6 +21,7 @@ export function render(doc: ChartDocument): string {
   if (sep === 'line') classes.push('nd-barlines');
   if (sep === 'dot')  classes.push('nd-bardots');
   if (doc.metadata.labels === 'left') classes.push('nd-labels-left');
+  if (doc.metadata.labels === 'none') classes.push('nd-labels-none');
 
   const zoomStyle = doc.metadata.zoom !== undefined
     ? ` style="font-size: ${100 + doc.metadata.zoom}%"`
