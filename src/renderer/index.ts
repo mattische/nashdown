@@ -84,6 +84,12 @@ function renderRow(row: Row, sep: SepStyle): string {
     ? `<span class="nd-repeat-marker nd-repeat-end">${DOTS}<span class="nd-rep-thick"></span><span class="nd-rep-thin"></span>${countHtml}</span>`
     : countHtml;
 
+  if (row.endingNumber !== undefined) {
+    const numHtml = `<span class="nd-volta-num">${row.endingNumber}.</span>`;
+    const bodyHtml = `<div class="nd-volta-body">${content}${end}</div>`;
+    return `<div class="nd-row">${start}<div class="nd-volta">${numHtml}${bodyHtml}</div></div>`;
+  }
+
   return `<div class="nd-row">${start}${content}${end}</div>`;
 }
 

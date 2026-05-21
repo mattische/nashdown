@@ -429,6 +429,31 @@
   font-size: 1.4em;
 }
 
+/* ── Volta bracket (endings) ── */
+.nd-volta {
+  display: inline-flex;
+  flex-direction: column;
+  border-top: 1.5px solid currentColor;
+  border-left: 1.5px solid currentColor;
+  padding: 0.12em 0 0 0.3em;
+  margin-top: 0.3em;
+}
+
+.nd-volta-num {
+  font-size: 0.62em;
+  font-weight: 700;
+  font-family: var(--font-monospace, monospace);
+  line-height: 1;
+  margin-bottom: 0.2em;
+}
+
+.nd-volta-body {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 1.8em;
+}
+
 /* ── Error ── */
 .nd-error {
   color: var(--color-red, #e74c3c);

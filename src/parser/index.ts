@@ -100,6 +100,14 @@ function parseRow(line: string): Row {
   let repeatStart = false;
   let repeatEnd = false;
   let repeatCount: number | undefined;
+  let endingNumber: number | undefined;
+
+  // Detect ending prefix: 1.| 2.| etc.
+  const endingPrefixMatch = raw.match(/^(\d+)\.\|/);
+  if (endingPrefixMatch) {
+    endingNumber = parseInt(endingPrefixMatch[1], 10);
+    raw = raw.slice(endingPrefixMatch[0].length).trim();
+  }
 
   // Detect |: repeat start
   if (raw.startsWith('|:')) {
@@ -128,7 +136,7 @@ function parseRow(line: string): Row {
   const parts = raw.split('|').map(s => s.trim()).filter(s => s.length > 0);
   const measures: Measure[] = parts.map(parseMeasure);
 
-  return { repeatStart, measures, repeatEnd, repeatCount };
+  return { repeatStart, measures, repeatEnd, repeatCount, endingNumber };
 }
 
 function parseMeasure(raw: string): Measure {

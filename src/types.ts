@@ -24,6 +24,7 @@ export interface Row {
   measures: Measure[];
   repeatEnd: boolean;
   repeatCount?: number;
+  endingNumber?: number;
 }
 
 export interface Measure {
