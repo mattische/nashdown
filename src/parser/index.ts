@@ -55,14 +55,44 @@ export function parse(source: string): ChartDocument {
       continue;
     }
 
-    // Chart row — must contain at least one |
-    if (line.includes('|') && currentSection) {
-      metadataDone = true;
+    // Any remaining line is a chord row — auto-create anonymous section if needed
+    metadataDone = true;
+    if (!currentSection) {
+      currentSection = { name: '', rows: [] };
+      sections.push(currentSection);
+    }
+    if (line.includes('|')) {
       currentSection.rows.push(parseRow(line));
+    } else {
+      currentSection.rows.push(parseBareLine(line));
     }
   }
 
   return { metadata, sections };
+}
+
+// Parse a chord line without bar separators: each space-separated token is its own measure,
+// except tokens enclosed in ( ) which become a single multi-chord measure.
+function parseBareLine(line: string): Row {
+  const measures = splitBareMeasures(line).map(parseMeasure);
+  return { repeatStart: false, measures, repeatEnd: false };
+}
+
+function splitBareMeasures(line: string): string[] {
+  const result: string[] = [];
+  let current = '';
+  let depth = 0;
+  for (const ch of line) {
+    if (ch === '(') { depth++; current += ch; }
+    else if (ch === ')') { depth--; current += ch; }
+    else if (ch === ' ' && depth === 0) {
+      if (current.length > 0) { result.push(current); current = ''; }
+    } else {
+      current += ch;
+    }
+  }
+  if (current.length > 0) result.push(current);
+  return result.filter(s => s.length > 0);
 }
 
 function parseRow(line: string): Row {
