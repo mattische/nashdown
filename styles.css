@@ -151,24 +151,24 @@
 /* Thin vertical line separator */
 .nd-sep-line {
   display: inline-flex;
-  align-self: center;
+  align-self: flex-end;
   width: 1px;
   height: 1.4em;
   background: currentColor;
-  opacity: 0.2;
-  margin: 0 0.9em;
+  opacity: 0.5;
+  margin: 0 0.9em 0.15em;
   flex-shrink: 0;
 }
 
 /* Filled circle separator */
 .nd-sep-dot {
   display: inline-flex;
-  align-self: center;
+  align-self: flex-end;
   align-items: center;
   font-size: 0.9em;
   font-weight: 900;
-  opacity: 0.6;
-  margin: 0 0.7em;
+  opacity: 0.85;
+  margin: 0 0.7em 0.3em;
   flex-shrink: 0;
 }
 

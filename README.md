@@ -8,67 +8,143 @@ Renders fenced code blocks tagged ` ```nashdown ` or ` ```chart `.
 
 ## Frontmatter
 
+Optional key/value lines at the top of the block, before any section headers.
+
+| Key | Value | Description |
+|-----|-------|-------------|
+| `title` | text | Song title, shown as heading |
+| `key` | e.g. `G`, `Eb` | Key signature |
+| `tempo` | number | BPM |
+| `time` | e.g. `4/4`, `3/4` | Time signature |
+| `barlines` | `true` | Thin vertical lines between measures |
+| `bardots` | `true` | Filled dots between measures |
+| `zoom` | signed number | Font size offset in % (`20` = larger, `-10` = smaller) |
+| `labels` | `top` · `left` · `none` | Section label position (default: `top`) |
+
+---
+
+## Sections
+
+Section headers in `[square brackets]`. Content rows follow until the next header.
+
 ```
-title: Song Title
-key: G
-tempo: 96
-time: 4/4
-bardots: true      # filled dot between measures
-barlines: true     # thin line between measures
-zoom: 20%          # scale chart: positive = larger, negative = smaller
+[Verse]
+| C | G | Am | F |
+
+[Chorus]
+| F | G | C | C |
+```
+
+Rows before any section header are rendered in an anonymous section.
+
+---
+
+## Rows
+
+**With bar separators** — each cell between `|` is one measure:
+```
+| C | G | Am | F |
+```
+
+**Without bar separators** — each space-separated token is one measure:
+```
+C G Am F
+```
+
+Both styles can be mixed within a section.
+
+---
+
+## Grouping
+
+Wrap multiple chords in `( )` to place them all in one measure. The group is rendered with an underline.
+
+```
+| (C G) | Am | F |
+C (G Am) F
 ```
 
 ---
 
-## Syntax
+## Chords
 
-### Sections
+**Nashville** (scale degrees 1–7):
 ```
-[Verse]
-[Chorus]
-[Bridge]
-```
-
-### Rows
-Measures separated by `|`. Each row is one line.
-```
-| 1 | 4 | 5 | 1 |
+1   2   3   4   5   6   7
+b7  #4  b3
 ```
 
-### Chords
+**Letter chords** (A–G):
+```
+C   Am   Bm7   G#   Eb
+```
+
+**Qualities:**
+
+| Suffix | Meaning |
+|--------|---------|
+| `m` or `-` | Minor |
+| `maj7` | Major 7 |
+| `dim` | Diminished |
+| `aug` | Augmented |
+| `sus4` `sus2` | Suspended |
+| `add9` | Add |
+| `7` `9` `11` `13` | Extensions |
+
+**Slash chord:**
+```
+G/B   5/3   b7/5
+```
+
+---
+
+## Modifiers
+
 | Syntax | Meaning |
 |--------|---------|
-| `1` `4` `5` | Nashville scale degrees |
-| `G` `Am` `Bm7` | Letter chords |
-| `b7` `#4` | Flat / sharp prefix |
-| `1m` `1-` | Minor |
-| `1maj7` `1dim` `1aug` | Quality |
-| `1sus4` `1add9` | Sus / add |
-| `G/B` `5/3` | Slash chord |
-
-### Modifiers
-| Syntax | Meaning |
-|--------|---------|
-| `>1` `<1` | Push — anticipation marker above chord |
-| `'1` `''1` | Hits — tick marks above chord |
-| `1.` `1..` | Beat duration — tick marks above chord |
-| `1!` | Stab — short hit |
-| `1^` | Fermata |
-| `<1>` `<bA>` | Diamond — one strike, rings out |
-| `X` | Rest / pause |
+| `>1` | Push right — anticipation marker shown above |
+| `<1` | Push left — anticipation marker shown above |
+| `'1` | One hit mark above chord |
+| `''1` | Two hit marks above chord |
+| `1.` | One beat dot above chord |
+| `1..` | Two beat dots above chord |
+| `1!` | Stab — short hit, then silence |
+| `1^` | Fermata — hold |
+| `<1>` | Diamond — one strike, rings out |
+| `X` | Rest / silence |
 | `%` | Repeat previous measure |
 
-### Annotations and comments
+Modifiers combine freely: `''1!` (two hits + stab), `<G/B>` (diamond slash chord), `G/B'` (hit on bass note).
+
+---
+
+## Annotations and comments
+
 ```
-| G [rit.] |        # small italic label after measure
-| {intro} G |       # small italic comment above measure
+| G [rit.] |        # small italic label displayed after the measure
+| {build} G |       # small italic comment displayed above the measure
 ```
 
-### Repeats
+---
+
+## Repeats
+
 ```
-|: 1 | 4 | 5 :|        # repeat section
-|: 1 | 4 | 5 :|3       # repeat 3 times (with sign)
+|: 1 | 4 | 5 :|        # repeat section (double barline with dots)
+|: 1 | 4 | 5 :|3       # repeat 3 times (shown with sign)
 | 1 | 4 | 5 |x3        # repeat count label only (no sign)
+```
+
+---
+
+## Endings (volta brackets)
+
+Prefix a row with `N.|` to mark it as a numbered ending. Endings render inline on the same line as the preceding row, each inside a volta bracket. Put `:|` on the last ending row to close the repeat.
+
+```
+|: C | G | Am | F |
+1.| Em | D |
+2.| C :|
 ```
 
 ---
@@ -118,30 +194,21 @@ Copy `main.js`, `styles.css`, and `manifest.json` into:
 ```
 Then enable the plugin in Obsidian settings.
 
-
 ---
 
-## New release
+## Releases
 
-Add a new release tag:
+Create a new release:
 ```bash
-gh release create 1.0.0 main.js styles.css
-  manifest.json --title "1.0.0" --notes "Initial
-  release"
+gh release create vX.Y.Z main.js styles.css manifest.json --title "vX.Y.Z" --notes "notes"
 ```
 
-  - 1.0.0 — version tag (anything i.e,
-  1.0.1, 2.0.0)
-  - main.js styles.css manifest.json — files added to release (BRAT fetches these)
-  - --title — title of release
-  - --notes — release notes
-
-#### future updates pipeline:
+Build and release pipeline:
 ```bash
-  npm run build
-  git add main.js styles.css manifest.json
-  git commit -m "what have been done"
-  git push
-  gh release create 1.0.1 main.js styles.css
-  manifest.json --title "1.0.1" --notes "notes about update"
+npm run build
+git add src/ styles.css package.json manifest.json
+git commit -m "what changed"
+git tag vX.Y.Z
+git push origin master --tags
+gh release create vX.Y.Z main.js styles.css manifest.json --title "vX.Y.Z" --notes "notes"
 ```

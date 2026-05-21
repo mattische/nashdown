@@ -53,16 +53,35 @@ function renderHeader(doc: ChartDocument): string {
 }
 
 function renderSection(section: Section, sep: SepStyle): string {
-  const rows = section.rows.map(row => renderRow(row, sep)).join('\n');
+  const lines: string[] = [];
+  let i = 0;
+  while (i < section.rows.length) {
+    const row = section.rows[i];
+    // Collect ending rows that immediately follow this row
+    const endings: Row[] = [];
+    let j = i + 1;
+    while (j < section.rows.length && section.rows[j].endingNumber !== undefined) {
+      endings.push(section.rows[j]);
+      j++;
+    }
+    if (endings.length > 0) {
+      const inner = rowContent(row, sep) + endings.map(e => rowContent(e, sep)).join('');
+      lines.push(`<div class="nd-row">${inner}</div>`);
+      i = j;
+    } else {
+      lines.push(`<div class="nd-row">${rowContent(row, sep)}</div>`);
+      i++;
+    }
+  }
   return `<div class="nd-section">
   <div class="nd-section-label">${esc(section.name)}</div>
-  <div class="nd-section-content">${rows}</div>
+  <div class="nd-section-content">${lines.join('\n')}</div>
 </div>`;
 }
 
 const DOTS = '<span class="nd-rep-dots"><span class="nd-rep-dot"></span><span class="nd-rep-dot"></span></span>';
 
-function renderRow(row: Row, sep: SepStyle): string {
+function rowContent(row: Row, sep: SepStyle): string {
   const measureHtmls = row.measures
     .map(renderMeasure)
     .filter(m => m !== '');
@@ -73,7 +92,6 @@ function renderRow(row: Row, sep: SepStyle): string {
     ? '<span class="nd-sep nd-sep-dot">&#x2022;</span>'
     : '';
 
-  // Separators injected BETWEEN measures only — never at start or end
   const content = measureHtmls.join(sepHtml);
 
   const start = row.repeatStart
@@ -87,10 +105,10 @@ function renderRow(row: Row, sep: SepStyle): string {
   if (row.endingNumber !== undefined) {
     const numHtml = `<span class="nd-volta-num">${row.endingNumber}.</span>`;
     const bodyHtml = `<div class="nd-volta-body">${content}${end}</div>`;
-    return `<div class="nd-row">${start}<div class="nd-volta">${numHtml}${bodyHtml}</div></div>`;
+    return `${start}<div class="nd-volta">${numHtml}${bodyHtml}</div>`;
   }
 
-  return `<div class="nd-row">${start}${content}${end}</div>`;
+  return `${start}${content}${end}`;
 }
 
 function renderMeasure(measure: Measure): string {
