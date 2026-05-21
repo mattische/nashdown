@@ -28,48 +28,43 @@
   color: var(--color-base-60, #888);
 }
 
-/* ── Section ── */
+/* ── Section — default: label above content ── */
 .nd-section {
-  display: grid;
-  grid-template-columns: 5em 1fr;
-  gap: 0.3em 0;
+  display: block;
   margin-bottom: 1.8em;
-  align-items: start;
 }
 
 .nd-section-label {
   font-size: 0.82em;
   font-weight: 600;
   color: var(--color-base-60, #888);
-  text-align: right;
-  padding-right: 1em;
-  padding-top: 0.5em;
   white-space: nowrap;
+  padding-bottom: 0.3em;
 }
 
-/* Thin vertical line between label and content — always visible */
 .nd-section-content {
-  border-left: 1.5px solid var(--color-base-40, #666);
-  padding-left: 1em;
   display: flex;
   flex-direction: column;
 }
 
-/* labels: top — section label sits above content, no side column */
-.nd-labels-top .nd-section {
-  display: block;
+/* labels: left — section label in side column with vertical divider */
+.nd-labels-left .nd-section {
+  display: grid;
+  grid-template-columns: 5em 1fr;
+  gap: 0.3em 0;
+  align-items: start;
 }
 
-.nd-labels-top .nd-section-label {
-  text-align: left;
-  padding-right: 0;
-  padding-top: 0;
-  padding-bottom: 0.3em;
+.nd-labels-left .nd-section-label {
+  text-align: right;
+  padding-right: 1em;
+  padding-top: 0.5em;
+  padding-bottom: 0;
 }
 
-.nd-labels-top .nd-section-content {
-  border-left: none;
-  padding-left: 0;
+.nd-labels-left .nd-section-content {
+  border-left: 1.5px solid var(--color-base-40, #666);
+  padding-left: 1em;
 }
 
 /* ── Row — default: no bar lines, just space between measures ── */
@@ -415,9 +410,6 @@
 }
 
 /* ── Rest X ── */
-.nd-rest .nd-root {
-  opacity: 0.4;
-}
 
 /* ── Fermata ── */
 .nd-fermata {

@@ -35,7 +35,8 @@ export function parse(source: string): ChartDocument {
         if (!isNaN(n)) metadata.zoom = n;
       }
       else if (key === 'labels') {
-        if (value.toLowerCase() === 'top') metadata.labels = 'top';
+        const v = value.toLowerCase();
+        if (v === 'left' || v === 'top') metadata.labels = v as 'left' | 'top';
       }
       continue;
     }

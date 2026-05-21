@@ -20,7 +20,7 @@ export function render(doc: ChartDocument): string {
   const classes = ['nd-chart'];
   if (sep === 'line') classes.push('nd-barlines');
   if (sep === 'dot')  classes.push('nd-bardots');
-  if (doc.metadata.labels === 'top') classes.push('nd-labels-top');
+  if (doc.metadata.labels === 'left') classes.push('nd-labels-left');
 
   const zoomStyle = doc.metadata.zoom !== undefined
     ? ` style="font-size: ${100 + doc.metadata.zoom}%"`
